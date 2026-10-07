@@ -27,16 +27,86 @@
       padding-bottom: 80px;
     }
 
+    /* Tela de Auth / Login */
+    .auth-screen {
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: var(--bg-dark);
+      z-index: 10000;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 24px;
+    }
+
+    .auth-card {
+      width: 100%;
+      max-width: 400px;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 20px;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+    }
+
+    .auth-brand {
+      text-align: center;
+      font-size: 1.8rem;
+      font-weight: 900;
+      color: var(--accent-green);
+      letter-spacing: 1px;
+    }
+
+    .auth-subtitle {
+      text-align: center;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-top: -8px;
+      margin-bottom: 8px;
+    }
+
+    .auth-toggle {
+      display: flex;
+      background: #131520;
+      border: 1px solid var(--card-border);
+      border-radius: 12px;
+      padding: 4px;
+    }
+
+    .auth-toggle-btn {
+      flex: 1;
+      padding: 10px;
+      text-align: center;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      border: none;
+      background: transparent;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    .auth-toggle-btn.active {
+      background: var(--card-bg);
+      color: var(--accent-green);
+      border: 1px solid var(--card-border);
+    }
+
+    /* Container Principal */
     .app-shell {
       width: 100%;
       max-width: 480px;
       padding: 14px;
-      display: flex;
+      display: none;
       flex-direction: column;
       gap: 16px;
     }
 
-    /* Sistema de Notificação Toast Dark */
+    /* Toasts */
     #toast-container {
       position: fixed;
       top: 16px;
@@ -44,7 +114,7 @@
       transform: translateX(-50%);
       width: 90%;
       max-width: 420px;
-      z-index: 9999;
+      z-index: 12000;
       pointer-events: none;
     }
 
@@ -56,22 +126,17 @@
       border-radius: 14px;
       font-size: 0.85rem;
       font-weight: 700;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6), 0 0 15px rgba(0, 230, 118, 0.2);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
       display: flex;
       align-items: center;
       gap: 10px;
       margin-bottom: 8px;
-      animation: slideDown 0.3s ease, fadeOut 0.3s ease 3.7s forwards;
+      animation: slideDown 0.3s ease;
     }
 
     @keyframes slideDown {
       from { transform: translateY(-20px); opacity: 0; }
       to { transform: translateY(0); opacity: 1; }
-    }
-
-    @keyframes fadeOut {
-      from { opacity: 1; }
-      to { opacity: 0; transform: translateY(-10px); }
     }
 
     /* Modal de Missão */
@@ -128,11 +193,9 @@
       font-size: 1rem;
     }
 
-    /* Tabs Content */
     .tab-content { display: none; flex-direction: column; gap: 14px; }
     .tab-content.active { display: flex; }
 
-    /* Cards */
     .card {
       background: var(--card-bg);
       border: 1px solid var(--card-border);
@@ -140,20 +203,9 @@
       padding: 16px;
     }
 
-    .card-title {
-      font-size: 0.95rem;
-      font-weight: 700;
-      margin-bottom: 8px;
-    }
+    .card-title { font-size: 0.95rem; font-weight: 700; margin-bottom: 8px; }
+    .card-desc { font-size: 0.8rem; color: var(--text-muted); line-height: 1.4; margin-bottom: 12px; }
 
-    .card-desc {
-      font-size: 0.8rem;
-      color: var(--text-muted);
-      line-height: 1.4;
-      margin-bottom: 12px;
-    }
-
-    /* Buttons */
     .btn-green {
       width: 100%;
       padding: 12px;
@@ -166,18 +218,9 @@
       cursor: pointer;
     }
 
-    .btn-green:disabled {
-      background: #283330;
-      color: #556660;
-      cursor: not-allowed;
-    }
+    .btn-green:disabled { background: #283330; color: #556660; cursor: not-allowed; }
 
-    /* Grid de Parceiros e Ofertas (Estilo Freecash) */
-    .partner-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-    }
+    .partner-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 
     .partner-card {
       background: #131520;
@@ -192,65 +235,17 @@
     }
 
     .partner-card:hover { border-color: var(--accent-green); }
-    .partner-badge {
-      position: absolute;
-      top: 10px; right: 10px;
-      background: #2979ff;
-      color: #fff;
-      font-size: 0.65rem;
-      font-weight: 800;
-      padding: 2px 6px;
-      border-radius: 6px;
-    }
 
-    /* Sub Navigation */
-    .sub-nav {
-      display: flex;
-      border-bottom: 1px solid var(--card-border);
-      margin-bottom: 4px;
-    }
+    .sub-nav { display: flex; border-bottom: 1px solid var(--card-border); margin-bottom: 4px; }
+    .sub-tab { flex: 1; text-align: center; padding: 10px 0; font-size: 0.85rem; font-weight: 700; color: var(--text-muted); cursor: pointer; border-bottom: 2px solid transparent; }
+    .sub-tab.active { color: var(--accent-green); border-bottom-color: var(--accent-green); }
 
-    .sub-tab {
-      flex: 1;
-      text-align: center;
-      padding: 10px 0;
-      font-size: 0.85rem;
-      font-weight: 700;
-      color: var(--text-muted);
-      cursor: pointer;
-      border-bottom: 2px solid transparent;
-    }
-
-    .sub-tab.active {
-      color: var(--accent-green);
-      border-bottom-color: var(--accent-green);
-    }
-
-    /* 7 Days Grid */
-    .streak-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 8px;
-      margin: 12px 0;
-    }
-
-    .streak-box {
-      background: #131520;
-      border: 1px solid var(--card-border);
-      border-radius: 10px;
-      padding: 10px 6px;
-      text-align: center;
-    }
-
-    .streak-box.active {
-      border-color: var(--accent-green);
-      background: rgba(0, 230, 118, 0.1);
-    }
-
+    .streak-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin: 12px 0; }
+    .streak-box { background: #131520; border: 1px solid var(--card-border); border-radius: 10px; padding: 10px 6px; text-align: center; }
+    .streak-box.active { border-color: var(--accent-green); background: rgba(0, 230, 118, 0.1); }
     .streak-box h6 { font-size: 0.7rem; color: var(--text-muted); }
     .streak-box p { font-size: 0.75rem; font-weight: 800; color: var(--accent-green); margin-top: 4px; }
 
-    /* Inputs */
     .input-box {
       width: 100%;
       padding: 12px;
@@ -260,12 +255,11 @@
       color: #fff;
       font-size: 0.85rem;
       outline: none;
-      margin-top: 8px;
+      margin-top: 6px;
     }
 
     .input-box:focus { border-color: var(--accent-green); }
 
-    /* Bottom Navigation */
     .bottom-nav {
       position: fixed;
       bottom: 0; left: 50%;
@@ -280,15 +274,9 @@
     }
 
     .nav-item {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 3px;
-      color: var(--text-muted);
-      font-size: 0.7rem;
-      font-weight: 700;
-      background: none; border: none;
-      cursor: pointer; width: 25%;
+      display: flex; flex-direction: column; align-items: center; gap: 3px;
+      color: var(--text-muted); font-size: 0.7rem; font-weight: 700;
+      background: none; border: none; cursor: pointer; width: 25%;
     }
 
     .nav-item.active { color: var(--accent-green); }
@@ -297,18 +285,42 @@
 </head>
 <body>
 
-<!-- Contentor para Toasts (Notificações) -->
 <div id="toast-container"></div>
 
-<!-- Modal de Execução de Missão Interativa -->
+<!-- TELA DE LOGIN / REGISTO -->
+<div class="auth-screen" id="authScreen">
+  <div class="auth-card">
+    <div class="auth-brand">MONEY BOSS</div>
+    <div class="auth-subtitle">Ganha dinheiro com tarefas de IA e partilha de rede</div>
+
+    <div class="auth-toggle">
+      <button class="auth-toggle-btn active" id="btnTabLogin" onclick="setAuthMode('login')">Iniciar Sessão</button>
+      <button class="auth-toggle-btn" id="btnTabRegister" onclick="setAuthMode('register')">Criar Conta</button>
+    </div>
+
+    <div>
+      <label style="font-size:0.75rem; color:var(--text-muted);">E-MAIL</label>
+      <input type="email" class="input-box" id="authEmail" placeholder="teuemail@gmail.com">
+    </div>
+
+    <div>
+      <label style="font-size:0.75rem; color:var(--text-muted);">PALAVRA-PASSE</label>
+      <input type="password" class="input-box" id="authPassword" placeholder="••••••••">
+    </div>
+
+    <button class="btn-green" id="authSubmitBtn" onclick="handleAuthSubmit()">Entrar no Money Boss</button>
+  </div>
+</div>
+
+<!-- Modal de Missão Interativa -->
 <div class="modal-overlay" id="missionModal">
   <div class="modal-card">
     <h3 id="modalTitle" style="font-size:1.1rem; color:var(--accent-green);">A Iniciar Missão...</h3>
     <p id="modalDesc" style="font-size:0.85rem; color:var(--text-muted);">Completa a validação do agente de IA para receber a tua recompensa.</p>
     
-    <div id="modalStepContent">
+    <div>
       <label style="font-size:0.75rem; color:var(--text-muted);">Pergunta de Validação IA:</label>
-      <input type="text" class="input-box" id="taskAnswerInput" placeholder="Digita 'OK' para confirmar a tarefa">
+      <input type="text" class="input-box" id="taskAnswerInput" placeholder="Digita 'OK' para confirmar">
     </div>
 
     <button class="btn-green" id="confirmTaskBtn" onclick="confirmMissionExecution()">Concluir e Validar Recompensa</button>
@@ -316,70 +328,64 @@
   </div>
 </div>
 
-<div class="app-shell">
+<!-- APPLICAÇÃO PRINCIPAL -->
+<div class="app-shell" id="appShell">
   
-  <!-- Header -->
   <div class="top-bar">
-    <div class="avatar-btn">E</div>
+    <div class="avatar-btn" id="userAvatar">E</div>
     <div class="balance-pill" id="topBalance">$0.00</div>
-    <button class="icon-btn" onclick="showToast('Sem novas notificações do sistema', 'info')">🔔</button>
+    <button style="background:transparent; border:none; color:var(--text-muted); font-size:1.2rem; cursor:pointer;" onclick="logout()">🚪</button>
   </div>
 
-  <!-- ABA 1: GANHA (Estilo Freecash) -->
+  <!-- ABA 1: GANHA -->
   <div class="tab-content active" id="tab-ganha">
-    
-    <!-- Partilha de Rede -->
     <div class="card">
       <div class="card-title">📶 Partilha de Rede em 2º Plano</div>
-      <div class="card-desc">Ganha <strong>$0.15 a cada 10 minutos</strong> mantendo a app aberta e partilhando a tua ligação à Internet.</div>
+      <div class="card-desc">Ganha <strong>$0.15 a cada 10 minutos</strong> mantendo a app aberta e partilhando a tua ligação.</div>
       <button class="btn-green" id="netBtn" onclick="toggleNetwork()">Iniciar Partilha</button>
     </div>
 
-    <!-- Parceiros de Pesquisas & Offerwalls -->
     <div class="card">
       <div class="card-title">🔬 Parceiros de Pesquisas</div>
-      <div class="card-desc">Completa inquéritos de mercado para ganhar grandes recompensas em dólar.</div>
+      <div class="card-desc">Completa inquéritos de mercado para ganhar grandes recompensas.</div>
       
       <div class="partner-grid">
-        <div class="partner-card" onclick="openInteractiveTask('BitLabs Surveys', 1.20, 'Responda ao questionário de 3 minutos sobre marcas tecnológicas.')">
-          <span class="partner-badge">+50%</span>
+        <div class="partner-card" onclick="openInteractiveTask('BitLabs Surveys', 1.20, 'Responda ao questionário de 3 minutos sobre tecnologia.')">
           <h5 style="color:#2979ff;">BitLabs</h5>
           <span style="font-size:0.7rem; color:var(--text-muted);">Até $1.20 / pesquisa</span>
         </div>
 
-        <div class="partner-card" onclick="openInteractiveTask('CPX Research', 0.85, 'Valide os seus dados de perfil para desbloquear inquéritos.')">
+        <div class="partner-card" onclick="openInteractiveTask('CPX Research', 0.85, 'Valide os seus dados de perfil para desbloquear pesquisas.')">
           <h5 style="color:#00e5ff;">CPX Research</h5>
           <span style="font-size:0.7rem; color:var(--text-muted);">Até $0.85 / pesquisa</span>
         </div>
       </div>
     </div>
 
-    <!-- Parceiros de Ofertas & Jogos -->
     <div class="card">
-      <div class="card-title">🎮 Parceiros de Ofertas e Aplicações</div>
-      <div class="card-desc">Instala aplicações, atinge níveis em jogos ou regista-te em serviços parceiros.</div>
+      <div class="card-title">🎮 Ofertas e Aplicações</div>
+      <div class="card-desc">Instala aplicações ou atinge níveis em jogos parceiros.</div>
       
       <div class="partner-grid">
-        <div class="partner-card" onclick="openInteractiveTask('AdGate Media - King Choice', 3.50, 'Instale a app e alcance o nível 10 no jogo.')">
+        <div class="partner-card" onclick="openInteractiveTask('AdGate Media', 3.50, 'Instale a app e alcance o nível 10.')">
           <h5>AdGate Media</h5>
-          <span style="font-size:0.7rem; color:var(--accent-green);">Recompensa: $3.50</span>
+          <span style="font-size:0.7rem; color:var(--accent-green);">$3.50 recompensa</span>
         </div>
 
-        <div class="partner-card" onclick="openInteractiveTask('Torox - Teste de App IA', 1.50, 'Registe-se e execute 1 teste na plataforma parceira.')">
+        <div class="partner-card" onclick="openInteractiveTask('Torox IA', 1.50, 'Registe-se e execute 1 teste de validação.')">
           <h5>Torox</h5>
-          <span style="font-size:0.7rem; color:var(--accent-green);">Recompensa: $1.50</span>
+          <span style="font-size:0.7rem; color:var(--accent-green);">$1.50 recompensa</span>
         </div>
       </div>
     </div>
-
   </div>
 
   <!-- ABA 2: MINHAS -->
   <div class="tab-content" id="tab-minhas">
     <div class="card">
-      <div class="card-title">📋 Minhas Atividades e Histórico</div>
-      <div class="card-desc">Histórico detalhado das tuas tarefas concluídas e rendimentos de rede acumulados.</div>
-      <p style="font-size:0.8rem; color:var(--text-muted);" id="activityLog">Nenhuma atividade registrada hoje.</p>
+      <div class="card-title">📋 Minhas Atividades</div>
+      <div class="card-desc">Histórico detalhado das tuas tarefas e rendimentos de rede.</div>
+      <p style="font-size:0.8rem; color:var(--text-muted);" id="activityLog">Nenhuma atividade recente.</p>
     </div>
   </div>
 
@@ -394,26 +400,26 @@
       <div class="card-title">Métodos de Levantamento (Mínimo $10.00)</div>
       
       <div class="partner-grid" style="margin-bottom:12px;">
-        <div class="partner-card" id="pay-bybit" onclick="selectPayoutMethod('Bybit')">
+        <div class="partner-card" onclick="selectPayoutMethod('Bybit')">
           <h5>Bybit / USDT</h5>
           <span style="font-size:0.7rem; color:var(--text-muted);">UID ou BEP-20</span>
         </div>
-        <div class="partner-card" id="pay-redotpay" onclick="selectPayoutMethod('RedotPay')">
+        <div class="partner-card" onclick="selectPayoutMethod('RedotPay')">
           <h5>RedotPay</h5>
           <span style="font-size:0.7rem; color:var(--text-muted);">RedotPay ID</span>
         </div>
-        <div class="partner-card" id="pay-paypal" onclick="selectPayoutMethod('PayPal')">
+        <div class="partner-card" onclick="selectPayoutMethod('PayPal')">
           <h5>PayPal</h5>
           <span style="font-size:0.7rem; color:var(--text-muted);">E-mail</span>
         </div>
-        <div class="partner-card" id="pay-visa" onclick="selectPayoutMethod('Visa')">
+        <div class="partner-card" onclick="selectPayoutMethod('Visa')">
           <h5>Cartão Visa</h5>
           <span style="font-size:0.7rem; color:var(--text-muted);">Virtual / Cripto</span>
         </div>
       </div>
 
       <input type="text" class="input-box" id="payDest" placeholder="Inserir E-mail, UID ou Carteira">
-      <input type="number" class="input-box" id="payAmount" placeholder="Valor do saque (Mínimo $10.00)" min="10">
+      <input type="number" class="input-box" id="payAmount" placeholder="Valor ($10.00)" min="10">
       <button class="btn-green" style="margin-top:12px;" onclick="requestPayout()">Solicitar Saque</button>
     </div>
   </div>
@@ -425,11 +431,10 @@
       <div class="sub-tab" onclick="switchSubTab(this, 'sub-convide')">Convide Amigos</div>
     </div>
 
-    <!-- Bónus Diário de 7 Dias -->
     <div id="sub-bonus">
       <div class="card">
         <div class="card-title">🎁 Bónus de Boas-Vindas (1ª Semana)</div>
-        <div class="card-desc">Ganha <strong>$0.50 todos os dias</strong> durante os teus primeiros 7 dias de registo.</div>
+        <div class="card-desc">Ganha <strong>$0.50 todos os dias</strong> durante os teus primeiros 7 dias.</div>
         
         <div class="streak-grid">
           <div class="streak-box active"><h6>Dia 1</h6><p>$0.50</p></div>
@@ -445,7 +450,6 @@
       </div>
     </div>
 
-    <!-- Convide Amigos -->
     <div id="sub-convide" style="display:none;">
       <div class="card">
         <div class="card-title">👥 Convide Amigos</div>
@@ -480,6 +484,9 @@
 </div>
 
 <script>
+  let currentAuthMode = 'login';
+  let currentUser = JSON.parse(localStorage.getItem('money_boss_session')) || null;
+  
   let userData = JSON.parse(localStorage.getItem('money_boss_user')) || {
     balance: 0.00,
     loginDay: 1,
@@ -492,17 +499,58 @@
   let activeTaskReward = 0;
   let activeTaskTitle = '';
 
-  // Função para exibir notificações flutuantes Dark Neon (Sem usar alert branco!)
-  function showToast(message, type = 'success') {
+  function setAuthMode(mode) {
+    currentAuthMode = mode;
+    const btnLogin = document.getElementById('btnTabLogin');
+    const btnReg = document.getElementById('btnTabRegister');
+    const submitBtn = document.getElementById('authSubmitBtn');
+
+    if (mode === 'login') {
+      btnLogin.classList.add('active');
+      btnReg.classList.remove('active');
+      submitBtn.innerText = 'Entrar no Money Boss';
+    } else {
+      btnReg.classList.add('active');
+      btnLogin.classList.remove('active');
+      submitBtn.innerText = 'Criar Conta Grátis';
+    }
+  }
+
+  function handleAuthSubmit() {
+    const email = document.getElementById('authEmail').value.trim();
+    const password = document.getElementById('authPassword').value.trim();
+
+    if (!email || !password) {
+      showToast('Por favor, preenche o e-mail e a palavra-passe.');
+      return;
+    }
+
+    currentUser = { email: email };
+    localStorage.setItem('money_boss_session', JSON.stringify(currentUser));
+    
+    document.getElementById('authScreen').style.display = 'none';
+    document.getElementById('appShell').style.display = 'flex';
+    document.getElementById('userAvatar').innerText = email.charAt(0).toUpperCase();
+    
+    showToast(`Bem-vindo, ${email}!`);
+    updateUI();
+  }
+
+  function logout() {
+    localStorage.removeItem('money_boss_session');
+    currentUser = null;
+    document.getElementById('authScreen').style.display = 'flex';
+    document.getElementById('appShell').style.display = 'none';
+    showToast('Sessão terminada.');
+  }
+
+  function showToast(message) {
     const container = document.getElementById('toast-container');
     const toast = document.createElement('div');
     toast.className = 'toast';
     toast.innerHTML = `<span>⚡</span> <div>${message}</div>`;
     container.appendChild(toast);
-
-    setTimeout(() => {
-      toast.remove();
-    }, 4000);
+    setTimeout(() => { toast.remove(); }, 4000);
   }
 
   function updateUI() {
@@ -563,7 +611,6 @@
     }
   }
 
-  /* Modal de Missão Interativa */
   function openInteractiveTask(title, reward, desc) {
     activeTaskTitle = title;
     activeTaskReward = reward;
@@ -573,9 +620,7 @@
     document.getElementById('missionModal').style.display = 'flex';
   }
 
-  function closeModal() {
-    document.getElementById('missionModal').style.display = 'none';
-  }
+  function closeModal() { document.getElementById('missionModal').style.display = 'none'; }
 
   function confirmMissionExecution() {
     const btn = document.getElementById('confirmTaskBtn');
@@ -587,7 +632,7 @@
       closeModal();
       btn.innerText = 'Concluir e Validar Recompensa';
       btn.disabled = false;
-      showToast(`Missão concluída! +$${activeTaskReward.toFixed(2)} adicionados ao teu saldo.`);
+      showToast(`Missão concluída! +$${activeTaskReward.toFixed(2)} adicionados.`);
     }, 2500);
   }
 
@@ -619,7 +664,7 @@
 
     if (!dest) { showToast('Preenche a conta ou endereço de destino.'); return; }
     if (isNaN(amount) || amount < 10) { showToast('O valor mínimo para saque é $10.00.'); return; }
-    if (amount > userData.balance) { showToast('Saldo insuficiente para realizar este saque.'); return; }
+    if (amount > userData.balance) { showToast('Saldo insuficiente.'); return; }
 
     userData.balance -= amount;
     updateUI();
@@ -632,10 +677,16 @@
     const ref = document.getElementById('refLink');
     ref.select();
     navigator.clipboard?.writeText(ref.value);
-    showToast('Link de indicação copiado para a área de transferência!');
+    showToast('Link de indicação copiado!');
   }
 
-  updateUI();
+  // Verifica se já tem sessão ativa ao carregar
+  if (currentUser) {
+    document.getElementById('authScreen').style.display = 'none';
+    document.getElementById('appShell').style.display = 'flex';
+    document.getElementById('userAvatar').innerText = currentUser.email.charAt(0).toUpperCase();
+    updateUI();
+  }
 </script>
 
 </body>
