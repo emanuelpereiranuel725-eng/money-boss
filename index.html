@@ -4,7 +4,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Money Boss</title>
-<script data-cfasync="false" src="https://bauval.org/14/a2a018ba43e46a6c8c998bb9cca20ed4"></script>
+
+  <!-- ADSTERRA - SOCIAL BAR (O teu código original) -->
+  <script data-cfasync="false" src="https://bauval.org/14/a2a018ba43e46a6c8c998bb9cca20ed4"></script>
+
   <style>
     :root {
       --bg-dark: #12141d;
@@ -279,6 +282,7 @@
     .ad-container {
       width: 100%;
       max-width: 480px;
+      min-height: 50px;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -487,16 +491,21 @@
     </div>
   </div>
 
-  <script>
-  atOptions = {
-    'key' : '3def8194179f62920938ea82ec60f0e9',
-    'format' : 'iframe',
-    'height' : 50,
-    'width' : 320,
-    'params' : {}
-  };
-</script>
-<script src="https://bauval.org/22/3def8194179f62920938ea82ec60f0e9"></script>
+  <!-- BANNER ADSTERRA (Corrigido com invoke.js e centralizado) -->
+  <div class="ad-container">
+    <script type="text/javascript">
+      atOptions = {
+        'key' : '3def8194179f62920938ea82ec60f0e9',
+        'format' : 'iframe',
+        'height' : 50,
+        'width' : 320,
+        'params' : {}
+      };
+    </script>
+    <script type="text/javascript" src="https://bauval.org/22/3def8194179f62920938ea82ec60f0e9/invoke.js"></script>
+  </div>
+
+</div>
 
 <!-- Navigation Bar -->
 <div class="bottom-nav">
@@ -518,23 +527,134 @@
   </button>
 </div>
 
-<script>
-  let currentAuthMode = 'login';
-  let currentUser = JSON.parse(localStorage.getItem('money_boss_session')) || null;
-  
-  let userData = JSON.parse(localStorage.getItem('money_boss_user')) || {
-    balance: 0.00,
-    loginDay: 1,
-    lastClaimDate: null
+<!-- MÓDULO FIREBASE INTEGRADO -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { 
+    getAuth, 
+    createUserWithEmailAndPassword, 
+    signInWithEmailAndPassword, 
+    signOut, 
+    onAuthStateChanged 
+  } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+  import { 
+    getFirestore, 
+    doc, 
+    getDoc, 
+    setDoc, 
+    updateDoc 
+  } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyCweKOHTtwlE9sQ5LzT_0b-jvXSoBv-2KI",
+    authDomain: "money-boss-c47bf.firebaseapp.com",
+    projectId: "money-boss-c47bf",
+    storageBucket: "money-boss-c47bf.firebasestorage.app",
+    messagingSenderId: "268162804010",
+    appId: "1:268162804010:web:490722937b6184d0cc9653",
+    measurementId: "G-F76Q6Y832N"
   };
 
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const db = getFirestore(app);
+
+  let currentUser = null;
+  let currentAuthMode = 'login';
   let isNetRunning = false;
   let netTimer = null;
   let selectedPayout = 'Bybit';
   let activeTaskReward = 0;
   let activeTaskTitle = '';
 
-  function setAuthMode(mode) {
+  let userData = {
+    balance: 0.00,
+    loginDay: 1,
+    lastClaimDate: "",
+    lastActivity: "Nenhuma atividade recente."
+  };
+
+  function showToast(message) {
+    const container = document.getElementById('toast-container');
+    const toast = document.createElement('div');
+    toast.className = 'toast';
+    toast.innerHTML = `<span>⚡</span> <div>${message}</div>`;
+    container.appendChild(toast);
+    setTimeout(() => { toast.remove(); }, 4000);
+  }
+
+  // Carrega e sincroniza dados do utilizador com o Firestore
+  async function syncUserData(user) {
+    if (!user) return;
+    const userRef = doc(db, "users", user.uid);
+    try {
+      const docSnap = await getDoc(userRef);
+      if (docSnap.exists()) {
+        userData = docSnap.data();
+      } else {
+        userData = {
+          balance: 0.00,
+          loginDay: 1,
+          lastClaimDate: "",
+          lastActivity: "Nenhuma atividade recente.",
+          email: user.email
+        };
+        await setDoc(userRef, userData);
+      }
+      updateUI();
+    } catch (e) {
+      console.error("Erro ao sincronizar base de dados:", e);
+    }
+  }
+
+  // Guardar atualizações no Firestore
+  async function persistUserData() {
+    if (!currentUser) return;
+    try {
+      const userRef = doc(db, "users", currentUser.uid);
+      await updateDoc(userRef, userData);
+    } catch (e) {
+      console.error("Erro ao guardar na base de dados:", e);
+    }
+  }
+
+  function updateUI() {
+    document.getElementById('topBalance').innerText = '$' + (userData.balance || 0).toFixed(2);
+    document.getElementById('sacaBalance').innerText = '$' + (userData.balance || 0).toFixed(2);
+    document.getElementById('activityLog').innerText = userData.lastActivity || "Nenhuma atividade recente.";
+
+    const today = new Date().toDateString();
+    const dailyBtn = document.getElementById('dailyBtn');
+
+    if (userData.loginDay > 7) {
+      dailyBtn.disabled = true;
+      dailyBtn.innerText = 'Bónus da 1ª Semana Concluído';
+    } else if (userData.lastClaimDate === today) {
+      dailyBtn.disabled = true;
+      dailyBtn.innerText = 'Bónus de Hoje já Resgatado';
+    } else {
+      dailyBtn.disabled = false;
+      dailyBtn.innerText = 'Resgatar $0.50 de Hoje';
+    }
+  }
+
+  // Estado da sessão do utilizador via Firebase
+  onAuthStateChanged(auth, async (user) => {
+    if (user) {
+      currentUser = user;
+      document.getElementById('authScreen').style.display = 'none';
+      document.getElementById('appShell').style.display = 'flex';
+      document.getElementById('userAvatar').innerText = user.email ? user.email.charAt(0).toUpperCase() : 'U';
+      await syncUserData(user);
+    } else {
+      currentUser = null;
+      document.getElementById('authScreen').style.display = 'flex';
+      document.getElementById('appShell').style.display = 'none';
+    }
+  });
+
+  // Exportar funções para acesso pelos botões HTML
+  window.setAuthMode = (mode) => {
     currentAuthMode = mode;
     const btnLogin = document.getElementById('btnTabLogin');
     const btnReg = document.getElementById('btnTabRegister');
@@ -549,9 +669,9 @@
       btnLogin.classList.remove('active');
       submitBtn.innerText = 'Criar Conta Grátis';
     }
-  }
+  };
 
-  function handleAuthSubmit() {
+  window.handleAuthSubmit = async () => {
     const email = document.getElementById('authEmail').value.trim();
     const password = document.getElementById('authPassword').value.trim();
 
@@ -560,71 +680,51 @@
       return;
     }
 
-    currentUser = { email: email };
-    localStorage.setItem('money_boss_session', JSON.stringify(currentUser));
-    
-    document.getElementById('authScreen').style.display = 'none';
-    document.getElementById('appShell').style.display = 'flex';
-    document.getElementById('userAvatar').innerText = email.charAt(0).toUpperCase();
-    
-    showToast(`Bem-vindo, ${email}!`);
-    updateUI();
-  }
+    const submitBtn = document.getElementById('authSubmitBtn');
+    submitBtn.disabled = true;
+    submitBtn.innerText = 'A processar...';
 
-  function logout() {
-    localStorage.removeItem('money_boss_session');
-    currentUser = null;
-    document.getElementById('authScreen').style.display = 'flex';
-    document.getElementById('appShell').style.display = 'none';
-    showToast('Sessão terminada.');
-  }
-
-  function showToast(message) {
-    const container = document.getElementById('toast-container');
-    const toast = document.createElement('div');
-    toast.className = 'toast';
-    toast.innerHTML = `<span>⚡</span> <div>${message}</div>`;
-    container.appendChild(toast);
-    setTimeout(() => { toast.remove(); }, 4000);
-  }
-
-  function updateUI() {
-    document.getElementById('topBalance').innerText = '$' + userData.balance.toFixed(2);
-    document.getElementById('sacaBalance').innerText = '$' + userData.balance.toFixed(2);
-    
-    const today = new Date().toDateString();
-    const dailyBtn = document.getElementById('dailyBtn');
-
-    if (userData.loginDay > 7) {
-      dailyBtn.disabled = true;
-      dailyBtn.innerText = 'Bónus da 1ª Semana Concluído';
-    } else if (userData.lastClaimDate === today) {
-      dailyBtn.disabled = true;
-      dailyBtn.innerText = 'Bónus de Hoje já Resgatado';
-    } else {
-      dailyBtn.disabled = false;
-      dailyBtn.innerText = 'Resgatar $0.50 de Hoje';
+    try {
+      if (currentAuthMode === 'login') {
+        await signInWithEmailAndPassword(auth, email, password);
+        showToast('Sessão iniciada com sucesso!');
+      } else {
+        await createUserWithEmailAndPassword(auth, email, password);
+        showToast('Conta criada com sucesso!');
+      }
+    } catch (error) {
+      let msg = "Erro na autenticação.";
+      if (error.code === 'auth/email-already-in-use') msg = "Este e-mail já está registado.";
+      if (error.code === 'auth/wrong-password' || error.code === 'auth/invalid-credential') msg = "E-mail ou palavra-passe incorretos.";
+      if (error.code === 'auth/weak-password') msg = "A palavra-passe deve ter pelo menos 6 caracteres.";
+      showToast(msg);
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.innerText = currentAuthMode === 'login' ? 'Entrar no Money Boss' : 'Criar Conta Grátis';
     }
+  };
 
-    localStorage.setItem('money_boss_user', JSON.stringify(userData));
-  }
+  window.logout = async () => {
+    await signOut(auth);
+    showToast('Sessão terminada.');
+  };
 
-  function switchTab(btn, tabId) {
+  window.switchTab = (btn, tabId) => {
     document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
     document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
     btn.classList.add('active');
     document.getElementById(tabId).classList.add('active');
-  }
+  };
 
-  function switchSubTab(btn, subId) {
+  window.switchSubTab = (btn, subId) => {
     document.querySelectorAll('.sub-tab').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
     document.getElementById('sub-bonus').style.display = 'none';
     document.getElementById('sub-convide').style.display = 'none';
     document.getElementById(subId).style.display = 'block';
-  }
+  };
 
-  function toggleNetwork() {
+  window.toggleNetwork = () => {
     const btn = document.getElementById('netBtn');
     if (!isNetRunning) {
       isNetRunning = true;
@@ -634,7 +734,7 @@
       showToast('Partilha de rede iniciada! Ganhos automáticos a cada 10 min.');
 
       netTimer = setInterval(() => {
-        addEarnings(0.15, 'Partilha de Rede (10 min)');
+        window.addEarnings(0.15, 'Partilha de Rede (10 min)');
       }, 600000);
     } else {
       isNetRunning = false;
@@ -644,56 +744,60 @@
       btn.style.color = '#0b1712';
       showToast('Partilha de rede pausada.');
     }
-  }
+  };
 
-  function openInteractiveTask(title, reward, desc) {
+  window.openInteractiveTask = (title, reward, desc) => {
     activeTaskTitle = title;
     activeTaskReward = reward;
     document.getElementById('modalTitle').innerText = title;
     document.getElementById('modalDesc').innerText = desc;
     document.getElementById('taskAnswerInput').value = '';
     document.getElementById('missionModal').style.display = 'flex';
-  }
+  };
 
-  function closeModal() { document.getElementById('missionModal').style.display = 'none'; }
+  window.closeModal = () => {
+    document.getElementById('missionModal').style.display = 'none';
+  };
 
-  function confirmMissionExecution() {
+  window.confirmMissionExecution = () => {
     const btn = document.getElementById('confirmTaskBtn');
     btn.innerText = 'Validando com parceiro...';
     btn.disabled = true;
 
-    setTimeout(() => {
-      addEarnings(activeTaskReward, activeTaskTitle);
-      closeModal();
+    setTimeout(async () => {
+      await window.addEarnings(activeTaskReward, activeTaskTitle);
+      window.closeModal();
       btn.innerText = 'Concluir e Validar Recompensa';
       btn.disabled = false;
       showToast(`Missão concluída! +$${activeTaskReward.toFixed(2)} adicionados.`);
     }, 2500);
-  }
+  };
 
-  function claimDailyReward() {
+  window.claimDailyReward = async () => {
     const today = new Date().toDateString();
     if (userData.lastClaimDate !== today && userData.loginDay <= 7) {
-      userData.balance += 0.50;
+      userData.balance = (userData.balance || 0) + 0.50;
       userData.lastClaimDate = today;
-      userData.loginDay += 1;
+      userData.loginDay = (userData.loginDay || 1) + 1;
       updateUI();
+      await persistUserData();
       showToast('🎁 Recebeste $0.50 de bónus diário!');
     }
-  }
+  };
 
-  function addEarnings(val, source) {
-    userData.balance += val;
+  window.addEarnings = async (val, source) => {
+    userData.balance = (userData.balance || 0) + val;
+    userData.lastActivity = `+${val.toFixed(2)}$ de ${source} em ${new Date().toLocaleTimeString()}`;
     updateUI();
-    document.getElementById('activityLog').innerText = `+${val.toFixed(2)}$ de ${source} em ${new Date().toLocaleTimeString()}`;
-  }
+    await persistUserData();
+  };
 
-  function selectPayoutMethod(method) {
+  window.selectPayoutMethod = (method) => {
     selectedPayout = method;
     showToast(`Método selecionado: ${method}`);
-  }
+  };
 
-  function requestPayout() {
+  window.requestPayout = async () => {
     const dest = document.getElementById('payDest').value.trim();
     const amount = parseFloat(document.getElementById('payAmount').value);
 
@@ -702,26 +806,20 @@
     if (amount > userData.balance) { showToast('Saldo insuficiente.'); return; }
 
     userData.balance -= amount;
+    userData.lastActivity = `Saque solicitado: $${amount.toFixed(2)} via ${selectedPayout}`;
     updateUI();
+    await persistUserData();
     showToast(`✅ Pedido de $${amount.toFixed(2)} enviado via ${selectedPayout}!`);
     document.getElementById('payDest').value = '';
     document.getElementById('payAmount').value = '';
-  }
+  };
 
-  function copyRef() {
+  window.copyRef = () => {
     const ref = document.getElementById('refLink');
     ref.select();
     navigator.clipboard?.writeText(ref.value);
     showToast('Link de indicação copiado!');
-  }
-
-  // Verifica se já tem sessão ativa ao carregar
-  if (currentUser) {
-    document.getElementById('authScreen').style.display = 'none';
-    document.getElementById('appShell').style.display = 'flex';
-    document.getElementById('userAvatar').innerText = currentUser.email.charAt(0).toUpperCase();
-    updateUI();
-  }
+  };
 </script>
 
 </body>
