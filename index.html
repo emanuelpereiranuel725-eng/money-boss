@@ -1,129 +1,140 @@
+
 <!DOCTYPE html>
 <html lang="pt">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Money Boss - Renda Extra Digital</title>
+  <title>Money Boss - Plataforma Premium</title>
 
   <!-- ADSTERRA - SOCIAL BAR -->
   <script data-cfasync="false" src="https://bauval.org/14/a2a018ba43e46a6c8c998bb9cca20ed4"></script>
 
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap');
+
     :root {
-      --bg-dark: #0f172a;
-      --card-bg: #1e293b;
-      --card-border: #334155;
-      --accent-green: #00e676;
-      --accent-cyan: #00e5ff;
-      --text-white: #ffffff;
-      --text-muted: #94a3b8;
-      --nav-bg: #0f172a;
+      --bg-main: #0B0E14;
+      --card-bg: rgba(22, 27, 38, 0.75);
+      --card-border: rgba(255, 255, 255, 0.08);
+      --accent-green: #00FF87;
+      --accent-cyan: #60EFFF;
+      --accent-glow: rgba(0, 255, 135, 0.25);
+      --text-main: #FFFFFF;
+      --text-sub: #94A3B8;
+      --nav-bg: rgba(15, 20, 30, 0.95);
     }
 
     * { 
       box-sizing: border-box; 
       margin: 0; padding: 0; 
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
       -webkit-tap-highlight-color: transparent; 
     }
 
     body {
-      background-color: var(--bg-dark);
-      color: var(--text-white);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      min-height: 100vh;
-      padding-bottom: 80px;
+      background-color: var(--bg-main);
+      background-image: 
+        radial-gradient(circle at 10% 20%, rgba(0, 255, 135, 0.05) 0%, transparent 40%),
+        radial-gradient(circle at 90% 80%, rgba(96, 239, 255, 0.05) 0%, transparent 40%);
+      color: var(--text-main);
+      display: flex; flex-direction: column; align-items: center;
+      min-height: 100vh; padding-bottom: 90px;
     }
 
     /* Auth Screen */
     .auth-screen {
-      position: fixed;
-      top: 0; left: 0; width: 100%; height: 100%;
-      background: var(--bg-dark);
-      z-index: 10000;
-      display: flex; flex-direction: column;
-      justify-content: center; align-items: center;
-      padding: 20px;
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: var(--bg-main); z-index: 10000;
+      display: flex; flex-direction: column; justify-content: center; align-items: center;
+      padding: 24px;
     }
 
     .auth-card {
-      width: 100%; max-width: 380px;
+      width: 100%; max-width: 400px;
       background: var(--card-bg);
+      backdrop-filter: blur(16px);
       border: 1px solid var(--card-border);
-      border-radius: 20px; padding: 24px;
-      display: flex; flex-direction: column; gap: 14px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      border-radius: 28px; padding: 30px;
+      display: flex; flex-direction: column; gap: 18px;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.6);
     }
 
-    .brand-logo {
-      width: 64px; height: 64px;
-      background: rgba(0, 230, 118, 0.15);
+    .brand-logo-glow {
+      width: 76px; height: 76px;
+      background: linear-gradient(135deg, rgba(0,255,135,0.2), rgba(96,239,255,0.1));
       border: 2px solid var(--accent-green);
-      border-radius: 18px; display: flex;
-      align-items: center; justify-content: center;
-      margin: 0 auto;
-      font-weight: 900; font-size: 1.8rem; color: var(--accent-green);
+      border-radius: 24px; display: flex; align-items: center; justify-content: center;
+      margin: 0 auto; box-shadow: 0 0 30px var(--accent-glow);
     }
 
-    /* Shell Principal estilo App Android */
     .app-shell {
       width: 100%; max-width: 480px;
-      padding: 14px; display: none;
-      flex-direction: column; gap: 14px;
+      padding: 16px; display: none;
+      flex-direction: column; gap: 16px;
     }
 
     /* Top Bar */
     .top-bar {
       display: flex; justify-content: space-between; align-items: center;
-      padding: 10px 14px; background: var(--card-bg);
-      border-radius: 16px; border: 1px solid var(--card-border);
+      padding: 12px 18px; background: var(--card-bg);
+      backdrop-filter: blur(12px);
+      border-radius: 22px; border: 1px solid var(--card-border);
     }
 
     .balance-badge {
-      background: rgba(0, 230, 118, 0.15);
+      background: linear-gradient(135deg, rgba(0,255,135,0.15), rgba(96,239,255,0.05));
       border: 1px solid var(--accent-green);
       color: var(--accent-green);
-      padding: 6px 14px; border-radius: 20px;
-      font-weight: 800; font-size: 0.95rem;
+      padding: 8px 18px; border-radius: 20px;
+      font-weight: 800; font-size: 1rem;
+      box-shadow: 0 0 15px var(--accent-glow);
     }
 
-    .tab-content { display: none; flex-direction: column; gap: 12px; }
+    .tab-content { display: none; flex-direction: column; gap: 14px; }
     .tab-content.active { display: flex; }
 
     .card {
       background: var(--card-bg);
+      backdrop-filter: blur(12px);
       border: 1px solid var(--card-border);
-      border-radius: 18px; padding: 16px;
+      border-radius: 24px; padding: 20px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
     }
 
-    .card-title { font-size: 0.95rem; font-weight: 700; margin-bottom: 6px; }
-    .card-desc { font-size: 0.8rem; color: var(--text-muted); line-height: 1.4; margin-bottom: 12px; }
+    .card-title { font-size: 1rem; font-weight: 800; margin-bottom: 6px; letter-spacing: -0.3px; }
+    .card-desc { font-size: 0.82rem; color: var(--text-sub); line-height: 1.5; margin-bottom: 14px; }
 
     .btn-green {
-      width: 100%; padding: 12px;
-      background: var(--accent-green);
-      border: none; border-radius: 12px;
-      color: #000; font-weight: 800; font-size: 0.85rem;
-      cursor: pointer; transition: 0.2s;
+      width: 100%; padding: 14px;
+      background: linear-gradient(135deg, #00FF87, #00E5FF);
+      border: none; border-radius: 16px;
+      color: #0B0E14; font-weight: 800; font-size: 0.9rem;
+      cursor: pointer; transition: all 0.3s ease;
+      box-shadow: 0 4px 20px rgba(0, 255, 135, 0.3);
     }
 
-    .btn-green:disabled { background: #334155; color: #64748b; cursor: not-allowed; }
+    .btn-green:active { transform: scale(0.98); }
+    .btn-green:disabled { background: #2A324B; color: #64748B; box-shadow: none; cursor: not-allowed; }
 
-    .partner-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+    .partner-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 
     .partner-card {
-      background: #0f172a; border: 1px solid var(--card-border);
-      border-radius: 14px; padding: 12px;
-      display: flex; flex-direction: column; gap: 4px; cursor: pointer;
+      background: rgba(15, 20, 30, 0.6);
+      border: 1px solid var(--card-border);
+      border-radius: 18px; padding: 16px;
+      display: flex; flex-direction: column; gap: 6px; cursor: pointer;
+      transition: border-color 0.3s;
     }
 
+    .partner-card:hover { border-color: var(--accent-green); }
+
     .input-box {
-      width: 100%; padding: 12px; background: #0f172a;
-      border: 1px solid var(--card-border); border-radius: 10px;
-      color: #fff; font-size: 0.85rem; outline: none; margin-top: 6px;
+      width: 100%; padding: 14px; background: rgba(15, 20, 30, 0.8);
+      border: 1px solid var(--card-border); border-radius: 14px;
+      color: #fff; font-size: 0.85rem; outline: none; margin-top: 8px;
     }
+
+    .input-box:focus { border-color: var(--accent-green); }
 
     /* Bottom Navigation Bar Fixa */
     .bottom-nav {
@@ -131,14 +142,15 @@
       transform: translateX(-50%);
       width: 100%; max-width: 480px;
       background: var(--nav-bg);
+      backdrop-filter: blur(20px);
       border-top: 1px solid var(--card-border);
       display: flex; justify-content: space-around;
-      padding: 10px 0; z-index: 999;
+      padding: 12px 0; z-index: 999;
     }
 
     .nav-item {
-      display: flex; flex-direction: column; align-items: center; gap: 2px;
-      color: var(--text-muted); font-size: 0.7rem; font-weight: 700;
+      display: flex; flex-direction: column; align-items: center; gap: 4px;
+      color: var(--text-sub); font-size: 0.7rem; font-weight: 700;
       background: none; border: none; cursor: pointer; width: 20%;
     }
 
@@ -151,9 +163,11 @@
     }
 
     .toast {
-      background: #1e293b; border: 1px solid var(--accent-green);
-      color: #fff; padding: 12px 16px; border-radius: 12px;
+      background: rgba(22, 27, 38, 0.95);
+      border: 1px solid var(--accent-green);
+      color: #fff; padding: 14px 18px; border-radius: 16px;
       font-size: 0.85rem; font-weight: 700; margin-bottom: 8px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
     }
   </style>
 </head>
@@ -161,17 +175,21 @@
 
 <div id="toast-container"></div>
 
-<!-- TELA DE AUTENTICAÇÃO -->
+<!-- TELA DE AUTENTICAÇÃO DESIGN PREMIUM -->
 <div class="auth-screen" id="authScreen">
   <div class="auth-card">
-    <div class="brand-logo">$</div>
-    <h2 style="text-align:center; color:var(--accent-green); font-size:1.4rem;">MONEY BOSS</h2>
-    <p style="text-align:center; font-size:0.8rem; color:var(--text-muted);">A tua plataforma de renda extra no telemóvel</p>
+    <div class="brand-logo-glow">
+      <svg viewBox="0 0 100 100" width="46" height="46">
+        <text x="50%" y="54%" font-family="Arial Black" font-weight="900" font-size="44" fill="#00FF87" text-anchor="middle" dominant-baseline="middle">$</text>
+      </svg>
+    </div>
+    <h2 style="text-align:center; color:var(--text-main); font-size:1.6rem; font-weight:800;">MONEY BOSS</h2>
+    <p style="text-align:center; font-size:0.85rem; color:var(--text-sub);">A tua plataforma vip de tarefas e rendimentos</p>
 
     <input type="email" class="input-box" id="authEmail" placeholder="O teu E-mail">
     <input type="password" class="input-box" id="authPassword" placeholder="A tua Palavra-passe">
 
-    <button class="btn-green" onclick="handleAuth()">Entrar / Criar Conta</button>
+    <button class="btn-green" onclick="handleAuth()">Entrar no Império</button>
   </div>
 </div>
 
@@ -179,7 +197,7 @@
 <div class="app-shell" id="appShell">
 
   <div class="top-bar">
-    <div style="font-weight:900; color:var(--accent-green);">MB BOSS</div>
+    <div style="font-weight:900; color:var(--accent-green); font-size:1.1rem; letter-spacing:1px;">MONEY BOSS</div>
     <div class="balance-badge" id="topBalance">$0.00</div>
   </div>
 
@@ -200,22 +218,22 @@
   <!-- ABA 1: INÍCIO -->
   <div class="tab-content active" id="tab-home">
     <div class="card">
-      <div class="card-title">⚡ Booster VIP de Anúncios</div>
-      <div class="card-desc">Clique no botão abaixo para abrir a oferta patrocinada. Regresse ao site para receber <strong>$0.01 no seu saldo</strong>.</div>
-      <button class="btn-green" onclick="triggerBooster()">Ativar Booster VIP ($0.01)</button>
+      <div class="card-title">🚀 Booster VIP de Anúncios</div>
+      <div class="card-desc">Ativa a oferta patrocinada e desbloqueia <strong>$0.01 de rendimento direto</strong> na tua conta a cada ciclo.</div>
+      <button class="btn-green" onclick="triggerBooster()">⚡ Ativar Booster VIP ($0.01)</button>
     </div>
 
     <div class="card">
-      <div class="card-title">🎮 Ofertas CPA e Instalações</div>
-      <div class="card-desc">Instale aplicações recomendadas e receba até $2.00 por tarefa.</div>
+      <div class="card-title">💎 Ofertas CPA & Instalações</div>
+      <div class="card-desc">Descarrega e testa aplicações parceiras internacionais para acumular dólares.</div>
       <div class="partner-grid">
-        <div class="partner-card" onclick="simulateTask('AdGate Media', 1.00)">
-          <h5 style="color:var(--accent-green);">AdGate Media</h5>
-          <span style="font-size:0.7rem; color:var(--text-muted);">Até $1.00 / app</span>
+        <div class="partner-card" onclick="simulateTask('AdGate Media')">
+          <h5 style="color:var(--accent-green); font-weight:800;">AdGate Media</h5>
+          <span style="font-size:0.75rem; color:var(--text-sub);">Até $2.00 / app</span>
         </div>
-        <div class="partner-card" onclick="simulateTask('Torox', 0.80)">
-          <h5 style="color:var(--accent-cyan);">Torox</h5>
-          <span style="font-size:0.7rem; color:var(--text-muted);">Até $0.80 / jogo</span>
+        <div class="partner-card" onclick="simulateTask('Torox')">
+          <h5 style="color:var(--accent-cyan); font-weight:800;">Torox</h5>
+          <span style="font-size:0.75rem; color:var(--text-sub);">Até $1.50 / jogo</span>
         </div>
       </div>
     </div>
@@ -224,16 +242,16 @@
   <!-- ABA 2: TAREFAS -->
   <div class="tab-content" id="tab-tarefas">
     <div class="card">
-      <div class="card-title">📋 Inquéritos de Mercado</div>
-      <div class="card-desc">Responda a perguntas rápidas de empresas internacionais.</div>
+      <div class="card-title">📊 Pesquisas de Mercado</div>
+      <div class="card-desc">Dá a tua opinião em inquéritos rápidos de marcas globais.</div>
       <div class="partner-grid">
-        <div class="partner-card" onclick="simulateTask('CPX Research', 0.50)">
-          <h5 style="color:#2979ff;">CPX Research</h5>
-          <span style="font-size:0.7rem; color:var(--text-muted);">$0.50 / pesquisa</span>
+        <div class="partner-card" onclick="simulateTask('CPX Research')">
+          <h5 style="color:#00E5FF; font-weight:800;">CPX Research</h5>
+          <span style="font-size:0.75rem; color:var(--text-sub);">$0.50 / pesquisa</span>
         </div>
-        <div class="partner-card" onclick="simulateTask('BitLabs', 0.40)">
-          <h5 style="color:#00e5ff;">BitLabs</h5>
-          <span style="font-size:0.7rem; color:var(--text-muted);">$0.40 / pesquisa</span>
+        <div class="partner-card" onclick="simulateTask('BitLabs')">
+          <h5 style="color:#00FF87; font-weight:800;">BitLabs</h5>
+          <span style="font-size:0.75rem; color:var(--text-sub);">$0.40 / pesquisa</span>
         </div>
       </div>
     </div>
@@ -242,34 +260,34 @@
   <!-- ABA 3: BÓNUS -->
   <div class="tab-content" id="tab-bonus">
     <div class="card">
-      <div class="card-title">⭐ Siga as Nossas Redes Oficiais</div>
-      <div class="card-desc">Siga o nosso TikTok e Instagram oficiais e resgate **$0.10 de bónus imediato**.</div>
-      <div style="display:flex; gap:8px; margin-bottom:10px;">
-        <a href="https://www.tiktok.com/@moneyboss12p?_r=1&_t=ZS-9ARu2EyZdKs" target="_blank" style="flex:1; text-align:center; padding:10px; background:#0f172a; border:1px solid var(--card-border); border-radius:10px; color:#fff; text-decoration:none; font-size:0.75rem; font-weight:700;">🎵 TikTok</a>
-        <a href="https://www.instagram.com/moneyboss12p?rpxt=MWQ1MTQwY2Q3OWEzMQ==" target="_blank" style="flex:1; text-align:center; padding:10px; background:#0f172a; border:1px solid var(--card-border); border-radius:10px; color:#fff; text-decoration:none; font-size:0.75rem; font-weight:700;">📸 Instagram</a>
+      <div class="card-title">⭐ Redes Sociais Oficiais</div>
+      <div class="card-desc">Siga as nossas páginas do TikTok e Instagram e resgate <strong>$0.10 de bónus instantâneo</strong>.</div>
+      <div style="display:flex; gap:10px; margin-bottom:12px;">
+        <a href="https://www.tiktok.com/@moneyboss12p?_r=1&_t=ZS-9ARu2EyZdKs" target="_blank" style="flex:1; text-align:center; padding:12px; background:rgba(15,20,30,0.8); border:1px solid var(--card-border); border-radius:14px; color:#fff; text-decoration:none; font-size:0.8rem; font-weight:700;">🎵 TikTok</a>
+        <a href="https://www.instagram.com/moneyboss12p?rpxt=MWQ1MTQwY2Q3OWEzMQ==" target="_blank" style="flex:1; text-align:center; padding:12px; background:rgba(15,20,30,0.8); border:1px solid var(--card-border); border-radius:14px; color:#fff; text-decoration:none; font-size:0.8rem; font-weight:700;">📸 Instagram</a>
       </div>
-      <button class="btn-green" id="socialBtn" onclick="claimSocialBonus()">Resgatar Bónus de $0.10</button>
+      <button class="btn-green" id="socialBonusBtn" onclick="claimSocialBonus()">Resgatar Bónus de $0.10</button>
     </div>
   </div>
 
   <!-- ABA 4: SACA -->
   <div class="tab-content" id="tab-saca">
     <div class="card">
-      <div class="card-title">💳 Solicitar Levantamento (Mínimo $5.00)</div>
-      <div class="card-desc">Escolha a sua carteira para receber os seus ganhos em dólares.</div>
+      <div class="card-title">💳 Centro de Levamentos</div>
+      <div class="card-desc">Mínimo de $5.00 via USDT, RedotPay ou PayPal.</div>
       
       <input type="text" class="input-box" id="payDest" placeholder="Endereço USDT (BEP-20) / ID RedotPay / PayPal">
       <input type="number" class="input-box" id="payAmount" placeholder="Valor do Saque ($5.00 min)" min="5">
-      <button class="btn-green" style="margin-top:10px;" onclick="requestPayout()">Pedir Saque</button>
+      <button class="btn-green" style="margin-top:14px;" onclick="requestPayout()">Solicitar Levantamento</button>
     </div>
   </div>
 
   <!-- ABA 5: PERFIL -->
   <div class="tab-content" id="tab-perfil">
     <div class="card">
-      <div class="card-title">👤 A Tua Conta Money Boss</div>
-      <p style="font-size:0.8rem; color:var(--text-muted); margin-bottom:12px;" id="userEmailDisplay">E-mail: --</p>
-      <button class="btn-green" style="background:#ef4444; color:#fff;" onclick="logout()">Encerrar Sessão</button>
+      <div class="card-title">👤 Perfil do Utilizador</div>
+      <p style="font-size:0.85rem; color:var(--text-sub); margin-bottom:16px;" id="userEmailDisplay">E-mail: --</p>
+      <button class="btn-green" style="background:linear-gradient(135deg, #FF4B4B, #FF2A6D); color:#fff;" onclick="logout()">Sair da Conta</button>
     </div>
   </div>
 
@@ -347,7 +365,7 @@
     const socialBtn = document.getElementById('socialBonusBtn');
     if (socialBtn && userData.socialClaimed) {
       socialBtn.disabled = true;
-      socialBtn.innerText = "Bónus das Redes Já Resgatado";
+      socialBtn.innerText = "Bónus Já Resgatado";
     }
   }
 
@@ -382,7 +400,7 @@
     userData.balance = (userData.balance || 0) + 0.01;
     await updateDoc(doc(db, "users", currentUser.uid), { balance: userData.balance });
     updateUI();
-    showToast("⚡ +$0.01 adicionados por ativar a oferta!");
+    showToast("⚡ +$0.01 adicionados à tua conta!");
   };
 
   window.claimSocialBonus = async () => {
@@ -391,12 +409,12 @@
       userData.balance = (userData.balance || 0) + 0.10;
       await updateDoc(doc(db, "users", currentUser.uid), { balance: userData.balance, socialClaimed: true });
       updateUI();
-      showToast("🎉 Parabéns! Bónus de $0.10 creditado.");
+      showToast("🎉 Bónus de $0.10 resgatado com sucesso!");
     }
   };
 
-  window.simulateTask = async (provider, reward) => {
-    showToast(`Redirecionando para ${provider}...`);
+  window.simulateTask = async (provider) => {
+    showToast(`Carregando ofertas de ${provider}...`);
   };
 
   window.requestPayout = async () => {
