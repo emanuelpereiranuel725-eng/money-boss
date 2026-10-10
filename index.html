@@ -1,10 +1,9 @@
-
 <!DOCTYPE html>
 <html lang="pt">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Money Boss - Plataforma Premium</title>
+  <title>Money Boss - Plataforma Profissional</title>
 
   <!-- ADSTERRA - SOCIAL BAR -->
   <script data-cfasync="false" src="https://bauval.org/14/a2a018ba43e46a6c8c998bb9cca20ed4"></script>
@@ -14,14 +13,15 @@
 
     :root {
       --bg-main: #0B0E14;
-      --card-bg: rgba(22, 27, 38, 0.75);
-      --card-border: rgba(255, 255, 255, 0.08);
+      --card-bg: rgba(22, 27, 38, 0.85);
+      --card-border: rgba(255, 255, 255, 0.1);
       --accent-green: #00FF87;
       --accent-cyan: #60EFFF;
       --accent-glow: rgba(0, 255, 135, 0.25);
       --text-main: #FFFFFF;
       --text-sub: #94A3B8;
       --nav-bg: rgba(15, 20, 30, 0.95);
+      --danger-red: #FF4B4B;
     }
 
     * { 
@@ -55,15 +55,15 @@
       backdrop-filter: blur(16px);
       border: 1px solid var(--card-border);
       border-radius: 28px; padding: 30px;
-      display: flex; flex-direction: column; gap: 18px;
+      display: flex; flex-direction: column; gap: 16px;
       box-shadow: 0 20px 50px rgba(0,0,0,0.6);
     }
 
     .brand-logo-glow {
-      width: 76px; height: 76px;
+      width: 70px; height: 70px;
       background: linear-gradient(135deg, rgba(0,255,135,0.2), rgba(96,239,255,0.1));
       border: 2px solid var(--accent-green);
-      border-radius: 24px; display: flex; align-items: center; justify-content: center;
+      border-radius: 22px; display: flex; align-items: center; justify-content: center;
       margin: 0 auto; box-shadow: 0 0 30px var(--accent-glow);
     }
 
@@ -101,7 +101,7 @@
       box-shadow: 0 10px 30px rgba(0,0,0,0.3);
     }
 
-    .card-title { font-size: 1rem; font-weight: 800; margin-bottom: 6px; letter-spacing: -0.3px; }
+    .card-title { font-size: 1rem; font-weight: 800; margin-bottom: 6px; letter-spacing: -0.3px; display: flex; align-items: center; gap: 8px; }
     .card-desc { font-size: 0.82rem; color: var(--text-sub); line-height: 1.5; margin-bottom: 14px; }
 
     .btn-green {
@@ -114,29 +114,95 @@
     }
 
     .btn-green:active { transform: scale(0.98); }
-    .btn-green:disabled { background: #2A324B; color: #64748B; box-shadow: none; cursor: not-allowed; }
 
+    /* Grelha de Parceiros */
     .partner-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 
     .partner-card {
-      background: rgba(15, 20, 30, 0.6);
+      background: rgba(15, 20, 30, 0.7);
       border: 1px solid var(--card-border);
-      border-radius: 18px; padding: 16px;
-      display: flex; flex-direction: column; gap: 6px; cursor: pointer;
-      transition: border-color 0.3s;
+      border-radius: 18px; padding: 14px;
+      display: flex; flex-direction: column; align-items: center; text-align: center; gap: 8px; cursor: pointer;
+      transition: all 0.3s;
     }
 
-    .partner-card:hover { border-color: var(--accent-green); }
+    .partner-card:hover { border-color: var(--accent-green); transform: translateY(-2px); }
+
+    .partner-icon {
+      width: 42px; height: 42px; border-radius: 12px;
+      background: rgba(255,255,255,0.05);
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 800; font-size: 1.2rem;
+    }
+
+    /* Módulo de Pagamentos / Cartões */
+    .payment-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 14px; }
+
+    .payment-card {
+      background: rgba(15, 20, 30, 0.8);
+      border: 1px solid var(--card-border);
+      border-radius: 14px; padding: 10px;
+      display: flex; flex-direction: column; align-items: center; gap: 6px;
+      cursor: pointer; transition: 0.2s;
+    }
+
+    .payment-card.active {
+      border-color: var(--accent-green);
+      background: rgba(0, 255, 135, 0.1);
+    }
+
+    .payment-logo {
+      width: 32px; height: 32px; object-fit: contain;
+    }
+
+    .security-badge {
+      display: flex; align-items: center; gap: 6px;
+      background: rgba(0, 255, 135, 0.08);
+      border: 1px solid rgba(0, 255, 135, 0.2);
+      padding: 8px 12px; border-radius: 10px;
+      font-size: 0.72rem; color: var(--accent-green); margin-bottom: 12px;
+    }
+
+    /* Perfil do Utilizador */
+    .profile-header {
+      display: flex; align-items: center; gap: 16px; margin-bottom: 16px;
+    }
+
+    .profile-avatar-container {
+      position: relative; width: 70px; height: 70px;
+    }
+
+    .profile-avatar {
+      width: 70px; height: 70px; border-radius: 50%;
+      border: 2px solid var(--accent-green);
+      object-fit: cover; background: #1e293b;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.8rem; font-weight: 800; color: var(--accent-green);
+    }
+
+    .avatar-edit-btn {
+      position: absolute; bottom: 0; right: 0;
+      background: var(--accent-green); border: none;
+      width: 24px; height: 24px; border-radius: 50%;
+      color: #000; font-size: 0.75rem; font-weight: 800;
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
+    }
 
     .input-box {
-      width: 100%; padding: 14px; background: rgba(15, 20, 30, 0.8);
-      border: 1px solid var(--card-border); border-radius: 14px;
-      color: #fff; font-size: 0.85rem; outline: none; margin-top: 8px;
+      width: 100%; padding: 12px; background: rgba(15, 20, 30, 0.8);
+      border: 1px solid var(--card-border); border-radius: 12px;
+      color: #fff; font-size: 0.85rem; outline: none; margin-top: 6px;
     }
 
     .input-box:focus { border-color: var(--accent-green); }
 
-    /* Bottom Navigation Bar Fixa */
+    .select-box {
+      width: 100%; padding: 12px; background: rgba(15, 20, 30, 0.8);
+      border: 1px solid var(--card-border); border-radius: 12px;
+      color: #fff; font-size: 0.85rem; outline: none; margin-top: 6px;
+    }
+
+    /* Bottom Nav Fixa */
     .bottom-nav {
       position: fixed; bottom: 0; left: 50%;
       transform: translateX(-50%);
@@ -167,7 +233,6 @@
       border: 1px solid var(--accent-green);
       color: #fff; padding: 14px 18px; border-radius: 16px;
       font-size: 0.85rem; font-weight: 700; margin-bottom: 8px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
     }
   </style>
 </head>
@@ -175,21 +240,19 @@
 
 <div id="toast-container"></div>
 
-<!-- TELA DE AUTENTICAÇÃO DESIGN PREMIUM -->
+<!-- AUTENTICAÇÃO -->
 <div class="auth-screen" id="authScreen">
   <div class="auth-card">
     <div class="brand-logo-glow">
-      <svg viewBox="0 0 100 100" width="46" height="46">
-        <text x="50%" y="54%" font-family="Arial Black" font-weight="900" font-size="44" fill="#00FF87" text-anchor="middle" dominant-baseline="middle">$</text>
-      </svg>
+      <span style="font-size: 2rem; font-weight: 900; color: var(--accent-green);">$</span>
     </div>
-    <h2 style="text-align:center; color:var(--text-main); font-size:1.6rem; font-weight:800;">MONEY BOSS</h2>
-    <p style="text-align:center; font-size:0.85rem; color:var(--text-sub);">A tua plataforma vip de tarefas e rendimentos</p>
+    <h2 style="text-align:center; color:var(--text-main); font-size:1.5rem; font-weight:800;" id="txtAuthTitle">MONEY BOSS</h2>
+    <p style="text-align:center; font-size:0.85rem; color:var(--text-sub);" id="txtAuthSub">Plataforma VIP de Tarefas e Rendimentos</p>
 
-    <input type="email" class="input-box" id="authEmail" placeholder="O teu E-mail">
-    <input type="password" class="input-box" id="authPassword" placeholder="A tua Palavra-passe">
+    <input type="email" class="input-box" id="authEmail" placeholder="E-mail">
+    <input type="password" class="input-box" id="authPassword" placeholder="Palavra-passe">
 
-    <button class="btn-green" onclick="handleAuth()">Entrar no Império</button>
+    <button class="btn-green" onclick="handleAuth()" id="btnAuthSubmit">Entrar no Império</button>
   </div>
 </div>
 
@@ -202,7 +265,7 @@
   </div>
 
   <!-- ADSTERRA BANNER -->
-  <div style="display:flex; justify-content:center; margin: 4px 0;">
+  <div style="display:flex; justify-content:center; margin: 2px 0;">
     <script type="text/javascript">
       atOptions = {
         'key' : '3def8194179f62920938ea82ec60f0e9',
@@ -219,21 +282,37 @@
   <div class="tab-content active" id="tab-home">
     <div class="card">
       <div class="card-title">🚀 Booster VIP de Anúncios</div>
-      <div class="card-desc">Ativa a oferta patrocinada e desbloqueia <strong>$0.01 de rendimento direto</strong> na tua conta a cada ciclo.</div>
+      <div class="card-desc">Ativa a oferta patrocinada e desbloqueia <strong>$0.01 de rendimento direto</strong>.</div>
       <button class="btn-green" onclick="triggerBooster()">⚡ Ativar Booster VIP ($0.01)</button>
     </div>
 
     <div class="card">
-      <div class="card-title">💎 Ofertas CPA & Instalações</div>
-      <div class="card-desc">Descarrega e testa aplicações parceiras internacionais para acumular dólares.</div>
+      <div class="card-title">💎 Parceiros Oficiais de Ofertas & Jogos</div>
+      <div class="card-desc">Descarrega jogos na Google Play Store e cumpre missões para faturar.</div>
+      
       <div class="partner-grid">
-        <div class="partner-card" onclick="simulateTask('AdGate Media')">
-          <h5 style="color:var(--accent-green); font-weight:800;">AdGate Media</h5>
-          <span style="font-size:0.75rem; color:var(--text-sub);">Até $2.00 / app</span>
+        <div class="partner-card" onclick="simulateTask('Google Play Store / Apps')">
+          <div class="partner-icon">▶️</div>
+          <h5 style="color:#00E5FF;">Google Play</h5>
+          <span style="font-size:0.7rem; color:var(--text-sub);">Instalações PWA/Apps</span>
         </div>
+
+        <div class="partner-card" onclick="simulateTask('AdGate Media')">
+          <div class="partner-icon">🎮</div>
+          <h5 style="color:var(--accent-green);">AdGate Media</h5>
+          <span style="font-size:0.7rem; color:var(--text-sub);">Até $2.50 / oferta</span>
+        </div>
+
         <div class="partner-card" onclick="simulateTask('Torox')">
-          <h5 style="color:var(--accent-cyan); font-weight:800;">Torox</h5>
-          <span style="font-size:0.75rem; color:var(--text-sub);">Até $1.50 / jogo</span>
+          <div class="partner-icon">🔥</div>
+          <h5 style="color:#FF9100;">Torox</h5>
+          <span style="font-size:0.7rem; color:var(--text-sub);">Até $2.00 / jogo</span>
+        </div>
+
+        <div class="partner-card" onclick="simulateTask('AyeT-Studios')">
+          <div class="partner-icon">⚡</div>
+          <h5 style="color:#D500F9;">AyeT-Studios</h5>
+          <span style="font-size:0.7rem; color:var(--text-sub);">Recompensas Mobile</span>
         </div>
       </div>
     </div>
@@ -242,16 +321,32 @@
   <!-- ABA 2: TAREFAS -->
   <div class="tab-content" id="tab-tarefas">
     <div class="card">
-      <div class="card-title">📊 Pesquisas de Mercado</div>
-      <div class="card-desc">Dá a tua opinião em inquéritos rápidos de marcas globais.</div>
+      <div class="card-title">📊 Pesquisas & Opinião Remunerada</div>
+      <div class="card-desc">Responde a inquéritos das maiores empresas parceiras globais.</div>
+      
       <div class="partner-grid">
         <div class="partner-card" onclick="simulateTask('CPX Research')">
-          <h5 style="color:#00E5FF; font-weight:800;">CPX Research</h5>
-          <span style="font-size:0.75rem; color:var(--text-sub);">$0.50 / pesquisa</span>
+          <div class="partner-icon">📝</div>
+          <h5 style="color:#00E5FF;">CPX Research</h5>
+          <span style="font-size:0.7rem; color:var(--text-sub);">$0.50 / pesquisa</span>
         </div>
+
         <div class="partner-card" onclick="simulateTask('BitLabs')">
-          <h5 style="color:#00FF87; font-weight:800;">BitLabs</h5>
-          <span style="font-size:0.75rem; color:var(--text-sub);">$0.40 / pesquisa</span>
+          <div class="partner-icon">💡</div>
+          <h5 style="color:#00FF87;">BitLabs</h5>
+          <span style="font-size:0.7rem; color:var(--text-sub);">$0.45 / pesquisa</span>
+        </div>
+
+        <div class="partner-card" onclick="simulateTask('TheoremReach')">
+          <div class="partner-icon">🎯</div>
+          <h5 style="color:#FF3D00;">TheoremReach</h5>
+          <span style="font-size:0.7rem; color:var(--text-sub);">Ganha mesmo tentado</span>
+        </div>
+
+        <div class="partner-card" onclick="simulateTask('Pollfish')">
+          <div class="partner-icon">🐟</div>
+          <h5 style="color:#FFEB3B;">Pollfish</h5>
+          <span style="font-size:0.7rem; color:var(--text-sub);">Inquéritos Rápidos</span>
         </div>
       </div>
     </div>
@@ -261,7 +356,7 @@
   <div class="tab-content" id="tab-bonus">
     <div class="card">
       <div class="card-title">⭐ Redes Sociais Oficiais</div>
-      <div class="card-desc">Siga as nossas páginas do TikTok e Instagram e resgate <strong>$0.10 de bónus instantâneo</strong>.</div>
+      <div class="card-desc">Siga o TikTok e Instagram oficiais e resgate <strong>$0.10 de bónus instantâneo</strong>.</div>
       <div style="display:flex; gap:10px; margin-bottom:12px;">
         <a href="https://www.tiktok.com/@moneyboss12p?_r=1&_t=ZS-9ARu2EyZdKs" target="_blank" style="flex:1; text-align:center; padding:12px; background:rgba(15,20,30,0.8); border:1px solid var(--card-border); border-radius:14px; color:#fff; text-decoration:none; font-size:0.8rem; font-weight:700;">🎵 TikTok</a>
         <a href="https://www.instagram.com/moneyboss12p?rpxt=MWQ1MTQwY2Q3OWEzMQ==" target="_blank" style="flex:1; text-align:center; padding:12px; background:rgba(15,20,30,0.8); border:1px solid var(--card-border); border-radius:14px; color:#fff; text-decoration:none; font-size:0.8rem; font-weight:700;">📸 Instagram</a>
@@ -270,42 +365,126 @@
     </div>
   </div>
 
-  <!-- ABA 4: SACA -->
+  <!-- ABA 4: SACA / LEVANTAMENTO -->
   <div class="tab-content" id="tab-saca">
     <div class="card">
-      <div class="card-title">💳 Centro de Levamentos</div>
-      <div class="card-desc">Mínimo de $5.00 via USDT, RedotPay ou PayPal.</div>
+      <div class="card-title">💳 Centro de Levantamentos & Cartões</div>
+      <div class="card-desc">Selecione o seu método de recebimento ou vincule o seu cartão de forma encriptada.</div>
+
+      <div class="security-badge">
+        🔒 Encriptação Ponta a Ponta (SSL 256-bit). Os seus dados bancários permanecem 100% seguros.
+      </div>
+
+      <!-- SELEÇÃO VISUAL DE CARTÕES E MÉTODOS -->
+      <div class="payment-grid">
+        <div class="payment-card active" id="payMethod-visa" onclick="selectPaymentMethod('Visa', 'payMethod-visa')">
+          <div style="font-weight:900; color:#1A1F71; font-size:0.9rem;">VISA</div>
+          <span style="font-size:0.65rem; color:var(--text-sub);">Cartão Visa</span>
+        </div>
+
+        <div class="payment-card" id="payMethod-mastercard" onclick="selectPaymentMethod('Mastercard', 'payMethod-mastercard')">
+          <div style="font-weight:900; color:#EB001B; font-size:0.9rem;">MC</div>
+          <span style="font-size:0.65rem; color:var(--text-sub);">Mastercard</span>
+        </div>
+
+        <div class="payment-card" id="payMethod-bybit" onclick="selectPaymentMethod('Bybit/USDT', 'payMethod-bybit')">
+          <div style="font-weight:900; color:#F7A600; font-size:0.85rem;">BYBIT</div>
+          <span style="font-size:0.65rem; color:var(--text-sub);">USDT Cripto</span>
+        </div>
+
+        <div class="payment-card" id="payMethod-redotpay" onclick="selectPaymentMethod('RedotPay', 'payMethod-redotpay')">
+          <div style="font-weight:900; color:#FF2A6D; font-size:0.75rem;">REDOT</div>
+          <span style="font-size:0.65rem; color:var(--text-sub);">RedotPay ID</span>
+        </div>
+
+        <div class="payment-card" id="payMethod-paypal" onclick="selectPaymentMethod('PayPal', 'payMethod-paypal')">
+          <div style="font-weight:900; color:#003087; font-size:0.85rem;">PAYPAL</div>
+          <span style="font-size:0.65rem; color:var(--text-sub);">E-mail PayPal</span>
+        </div>
+
+        <div class="payment-card" id="payMethod-express" onclick="selectPaymentMethod('Multicaixa IBAN', 'payMethod-express')">
+          <div style="font-weight:900; color:#00E676; font-size:0.75rem;">AO/IBAN</div>
+          <span style="font-size:0.65rem; color:var(--text-sub);">Multicaixa</span>
+        </div>
+      </div>
+
+      <label style="font-size:0.75rem; color:var(--text-sub);">Destino do Pagamento / Nº do Cartão Vinculado:</label>
+      <input type="text" class="input-box" id="payDest" placeholder="Nº do Cartão, IBAN AO06... ou UID Bybit">
       
-      <input type="text" class="input-box" id="payDest" placeholder="Endereço USDT (BEP-20) / ID RedotPay / PayPal">
-      <input type="number" class="input-box" id="payAmount" placeholder="Valor do Saque ($5.00 min)" min="5">
-      <button class="btn-green" style="margin-top:14px;" onclick="requestPayout()">Solicitar Levantamento</button>
+      <label style="font-size:0.75rem; color:var(--text-sub); margin-top:8px; display:block;">Valor a Sacar ($5.00 Mínimo):</label>
+      <input type="number" class="input-box" id="payAmount" placeholder="5.00" min="5">
+      
+      <button class="btn-green" style="margin-top:14px;" onclick="requestPayout()">Solicitar Levantamento Seguro</button>
     </div>
   </div>
 
-  <!-- ABA 5: PERFIL -->
+  <!-- ABA 5: PERFIL E DEFINIÇÕES AVANÇADAS -->
   <div class="tab-content" id="tab-perfil">
+    
+    <!-- CABEÇALHO DO PERFIL -->
     <div class="card">
-      <div class="card-title">👤 Perfil do Utilizador</div>
-      <p style="font-size:0.85rem; color:var(--text-sub); margin-bottom:16px;" id="userEmailDisplay">E-mail: --</p>
-      <button class="btn-green" style="background:linear-gradient(135deg, #FF4B4B, #FF2A6D); color:#fff;" onclick="logout()">Sair da Conta</button>
+      <div class="profile-header">
+        <div class="profile-avatar-container">
+          <div class="profile-avatar" id="avatarDisplay">MB</div>
+          <button class="avatar-edit-btn" onclick="changeAvatar()">✏️</button>
+        </div>
+        <div>
+          <h4 style="font-size:1.1rem; font-weight:800;" id="profileNameDisplay">Utilizador Boss</h4>
+          <span style="font-size:0.75rem; color:var(--text-sub);" id="userEmailDisplay">E-mail: --</span>
+        </div>
+      </div>
+
+      <!-- SELETOR DE IDIOMA -->
+      <label style="font-size:0.75rem; color:var(--text-sub);">🌐 Idioma da Aplicação / Language:</label>
+      <select class="select-box" id="languageSelect" onchange="changeLanguage(this.value)">
+        <option value="pt">🇦🇴 Português (Angola)</option>
+        <option value="en">🇺🇸 English</option>
+        <option value="es">🇪🇸 Español</option>
+        <option value="fr">🇫🇷 Français</option>
+      </select>
     </div>
+
+    <!-- MÓDULO DE EDIÇÃO & SEGURANÇA -->
+    <div class="card">
+      <div class="card-title">⚙️ Editar Perfil & Segurança</div>
+      
+      <label style="font-size:0.75rem; color:var(--text-sub);">Nome Completo / Apelido:</label>
+      <input type="text" class="input-box" id="editName" placeholder="O teu nome Boss">
+
+      <label style="font-size:0.75rem; color:var(--text-sub); margin-top:8px; display:block;">E-mail / Telefone de Recuperação:</label>
+      <input type="text" class="input-box" id="editRecovery" placeholder="+244 9XX XXX XXX ou email2@gmail.com">
+
+      <button class="btn-green" style="margin-top:12px; background:rgba(0,255,135,0.15); border:1px solid var(--accent-green); color:var(--accent-green);" onclick="saveProfileChanges()">Salvar Alterações do Perfil</button>
+    </div>
+
+    <!-- MÓDULO DE EXCLUSÃO DE CONTA -->
+    <div class="card" style="border-color: rgba(255,75,75,0.3);">
+      <div class="card-title" style="color:var(--danger-red);">⚠️ Zona de Perigo</div>
+      <p class="card-desc">Se desejares encerrar a tua conta, todos os teus dados e saldo não sacado serão permanentemente apagados.</p>
+      
+      <div style="display:flex; gap:10px;">
+        <button class="btn-green" style="background:#ef4444; color:#fff; flex:1;" onclick="logout()">Sair da Conta</button>
+        <button class="btn-green" style="background:transparent; border:1px solid #ef4444; color:#ef4444; flex:1;" onclick="deleteAccount()">Excluir Conta</button>
+      </div>
+    </div>
+
   </div>
 
 </div>
 
 <!-- BOTTOM NAV FIXA ESTILO PLAY STORE -->
 <div class="bottom-nav">
-  <button class="nav-item active" onclick="switchTab(this, 'tab-home')">🏠 Início</button>
-  <button class="nav-item" onclick="switchTab(this, 'tab-tarefas')">🎮 Tarefas</button>
-  <button class="nav-item" onclick="switchTab(this, 'tab-bonus')">🎁 Bónus</button>
-  <button class="nav-item" onclick="switchTab(this, 'tab-saca')">💳 Saca</button>
-  <button class="nav-item" onclick="switchTab(this, 'tab-perfil')">👤 Perfil</button>
+  <button class="nav-item active" onclick="switchTab(this, 'tab-home')">🏠 <span id="nav-home">Início</span></button>
+  <button class="nav-item" onclick="switchTab(this, 'tab-tarefas')">🎮 <span id="nav-tasks">Tarefas</span></button>
+  <button class="nav-item" onclick="switchTab(this, 'tab-bonus')">🎁 <span id="nav-bonus">Bónus</span></button>
+  <button class="nav-item" onclick="switchTab(this, 'tab-saca')">💳 <span id="nav-pay">Saca</span></button>
+  <button class="nav-item" onclick="switchTab(this, 'tab-perfil')">👤 <span id="nav-profile">Perfil</span></button>
 </div>
 
 <script type="module">
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-  import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
-  import { getFirestore, doc, getDoc, setDoc, updateDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+  import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, deleteUser } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+  import { getFirestore, doc, getDoc, setDoc, updateDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
   const firebaseConfig = {
     apiKey: "AIzaSyCweKOHTtwlE9sQ5LzT_0b-jvXSoBv-2KI",
@@ -321,7 +500,8 @@
   const db = getFirestore(app);
 
   let currentUser = null;
-  let userData = { balance: 0.00, socialClaimed: false };
+  let selectedPayMethod = "Visa";
+  let userData = { balance: 0.00, socialClaimed: false, name: "Utilizador Boss", recovery: "", lang: "pt" };
 
   const ADSTERRA_DIRECT = "https://bauval.org/14/a2a018ba43e46a6c8c998bb9cca20ed4";
 
@@ -354,7 +534,7 @@
     if (snap.exists()) {
       userData = snap.data();
     } else {
-      userData = { balance: 0.00, socialClaimed: false, email: currentUser.email };
+      userData = { balance: 0.00, socialClaimed: false, email: currentUser.email, name: "Utilizador Boss", recovery: "", lang: "pt" };
       await setDoc(ref, userData);
     }
     updateUI();
@@ -362,6 +542,16 @@
 
   function updateUI() {
     document.getElementById('topBalance').innerText = `$${(userData.balance || 0).toFixed(2)}`;
+    document.getElementById('profileNameDisplay').innerText = userData.name || "Utilizador Boss";
+    document.getElementById('editName').value = userData.name || "";
+    document.getElementById('editRecovery').value = userData.recovery || "";
+    document.getElementById('languageSelect').value = userData.lang || "pt";
+
+    const avatar = document.getElementById('avatarDisplay');
+    if (userData.name) {
+      avatar.innerText = userData.name.charAt(0).toUpperCase();
+    }
+
     const socialBtn = document.getElementById('socialBonusBtn');
     if (socialBtn && userData.socialClaimed) {
       socialBtn.disabled = true;
@@ -387,6 +577,60 @@
   };
 
   window.logout = () => signOut(auth);
+
+  window.deleteAccount = async () => {
+    if (confirm("Tem a certeza que deseja EXCLUIR permanentemente a sua conta? Esta ação não pode ser desfeita.")) {
+      try {
+        await deleteDoc(doc(db, "users", currentUser.uid));
+        await deleteUser(currentUser);
+        showToast("Conta eliminada com sucesso.");
+      } catch (e) {
+        showToast("Por favor, inicie sessão novamente antes de apagar a conta.");
+      }
+    }
+  };
+
+  window.saveProfileChanges = async () => {
+    const newName = document.getElementById('editName').value.trim();
+    const newRec = document.getElementById('editRecovery').value.trim();
+
+    userData.name = newName || userData.name;
+    userData.recovery = newRec;
+
+    await updateDoc(doc(db, "users", currentUser.uid), {
+      name: userData.name,
+      recovery: userData.recovery
+    });
+
+    updateUI();
+    showToast("✅ Perfil e métodos de recuperação atualizados!");
+  };
+
+  window.changeLanguage = (lang) => {
+    userData.lang = lang;
+    if (lang === 'en') {
+      document.getElementById('nav-home').innerText = "Home";
+      document.getElementById('nav-tasks').innerText = "Tasks";
+      document.getElementById('nav-bonus').innerText = "Bonus";
+      document.getElementById('nav-pay').innerText = "Withdraw";
+      document.getElementById('nav-profile').innerText = "Profile";
+      showToast("Language changed to English");
+    } else {
+      document.getElementById('nav-home').innerText = "Início";
+      document.getElementById('nav-tasks').innerText = "Tarefas";
+      document.getElementById('nav-bonus').innerText = "Bónus";
+      document.getElementById('nav-pay').innerText = "Saca";
+      document.getElementById('nav-profile').innerText = "Perfil";
+      showToast("Idioma alterado para Português");
+    }
+  };
+
+  window.selectPaymentMethod = (methodName, cardId) => {
+    selectedPayMethod = methodName;
+    document.querySelectorAll('.payment-card').forEach(c => c.classList.remove('active'));
+    document.getElementById(cardId).classList.add('active');
+    showToast(`Método selecionado: ${methodName}`);
+  };
 
   window.switchTab = (btn, tabId) => {
     document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
@@ -414,21 +658,21 @@
   };
 
   window.simulateTask = async (provider) => {
-    showToast(`Carregando ofertas de ${provider}...`);
+    showToast(`A carregar ofertas de ${provider}...`);
   };
 
   window.requestPayout = async () => {
     const dest = document.getElementById('payDest').value.trim();
     const amount = parseFloat(document.getElementById('payAmount').value);
 
-    if (!dest) return showToast("Insira o destino de pagamento.");
+    if (!dest) return showToast("Insira o destino de pagamento ou cartão.");
     if (isNaN(amount) || amount < 5.0) return showToast("Saque mínimo de $5.00.");
     if (amount > userData.balance) return showToast("Saldo insuficiente.");
 
     userData.balance -= amount;
     await updateDoc(doc(db, "users", currentUser.uid), { balance: userData.balance });
     updateUI();
-    showToast(`✅ Pedido de $${amount.toFixed(2)} registado!`);
+    showToast(`✅ Pedido de $${amount.toFixed(2)} enviado via ${selectedPayMethod}!`);
   };
 </script>
 
